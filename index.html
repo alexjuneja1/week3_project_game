@@ -5,6 +5,26 @@
     <title>Press It!</title>
   </head>
   <body>
-    
+    <script>
+
+      var keysArray = [81,87,69,65,83,68,90,88,67];
+      var validKey = keysArray[Math.round(Math.random() * keysArray.length)]
+
+      //get a random key code from the array:
+      //keysArray[Math.round(Math.random() * keysArray.length)]
+
+    document.addEventListener('keypress', function(evt){
+        if(evt.which == validKey){
+            evt.preventDefault();
+            console.log('awesome!');
+            //validKey = keysArray[Math.round(Math.random() * keysArray.length)];
+        } else {
+          console.log('faillll!');
+        }
+
+    });
+
+
+    </script>
   </body>
 </html>

@@ -1,0 +1,5 @@
+Project I Week 3
+
+As a user, I want to be able to press buttons on the keyboard that are specified on the screen within a certain time-frame and to get as far as possible within the game since the time intervals continuously decrease in order to obtain more points than the second player.
+
+As a developer, I want to program Event Listeners to each key used because they all have the same functionality within the game. I want to program time intervals that are able to change with each round until a certain time limit and I want the time to reset after each play-through so the game can continuously be played by the users.

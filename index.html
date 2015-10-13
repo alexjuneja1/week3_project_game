@@ -1,50 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="utf-8">
     <title>Press It!</title>
   </head>
   <body>
     <h1>Press It!</h1>
     <div id ="prompt"></div>
-    <script>
-      var
-      var keysArray = [113,119,101,97,115,100,122,120,99];
-      var validKey = keysArray[Math.round(Math.random() * keysArray.length)]
-      //get a random key code from the array:
-      //keysArray[Math.round(Math.random() * keysArray.length)]
-      var showPrompt = function(){
-          console.log('Press', String.fromCharCode(validKey) );
-          return String.fromCharCode(validKey);
-      }
-      var promptDisplay = document.querySelector('#prompt');
-
-      //promptDisplay.innerText = showPrompt
-      promptDisplay.innerText = String.fromCharCode(validKey);
-
-      var keyEvents = function(evt){
-          if(evt.which === validKey){
-            // THIS RUNS WHEN PLAYER HITS CORRECT KEY
-              evt.preventDefault();
-              console.log('awesome!');
-              validKey = keysArray[Math.round(Math.random() * keysArray.length)]
-              promptDisplay.innerText = String.fromCharCode(validKey);
-              console.log('Press', String.fromCharCode(validKey) );
-          } else {
-            // THIS RUNS WHEN PLAYER HITS INCORRECT KEY
-            evt.preventDefault();
-            console.log('faillll!');
-            document.removeEventListener('keypress', keyEvents);
-          }
-      }
-
-     document.addEventListener('keypress', keyEvents);
-//    document.addEventListener('keypress', function(evt){
-//        console.log(evt.keyCode)
-//    });
-
-
-
-    </script>
+    <script src="main.js"></script>
   </body>
 </html>

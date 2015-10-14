@@ -1,9 +1,12 @@
 function playGame() {
   var score = 0;
+  var gameOver = "You lose! Game Over!";
   var counter = 7000;
   var timerInput = document.querySelector('#timer');
   var keysArray = [113,119,101,97,115,100,122,120,99];
-  var validKey = keysArray[Math.round(Math.random() * keysArray.length)]
+  var validKey = keysArray[Math.round(Math.random() * keysArray.length)];
+  var timeStart = null;
+  var timeTicking = null;
 
   var showPrompt = function(){
       console.log('Press', String.fromCharCode(validKey) );
@@ -26,7 +29,9 @@ function playGame() {
           console.log(counter);
           score++;
           console.log("Score"+": "+score);
-          document.querySelector('#score').innerText = score;
+          document.querySelector('#score').innerText = "Score"+": "+score;
+          window.clearInterval(timeTicking);
+          window.clearTimeout(timeStart);
           countDown();
       } else {
         fail();
@@ -34,16 +39,17 @@ function playGame() {
   }
 
   var fail = function() {
-    console.log('faillll!');
+    console.log('You lose! Game over!');
+    document.querySelector('#lose').innerText = gameOver;
+    window.clearInterval(timeTicking);
+    window.clearTimeout(timeStart);
     document.removeEventListener('keypress', keyEvents);
   }
 
   var countDown = function() {
-    window.clearInterval(timeTicking);
-    window.clearTimeout(timeStart);
     var timeLeft = counter;
-    var timeStart = window.setTimeout(fail, counter);
-    var timeTicking = window.setInterval(function(){
+    timeStart = window.setTimeout(fail, counter);
+    timeTicking = window.setInterval(function(){
       timeLeft -= 100
       timerInput.innerText = timeLeft;
       if (timeLeft == 0){

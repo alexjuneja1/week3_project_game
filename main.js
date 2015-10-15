@@ -15,16 +15,26 @@ var game = {
 // Function that runs when the game begins.
 function playGame() {
 
-console.log('turn:', game.turn);
+  if(game.turn%2===0){
+    //player1's turn, we're starting a new round, reset all scores back to 0
+    game.player1.score = 0;
+    game.player2.score = 0;
+    document.querySelector('#score1').innerText = game.player1.name + "'s" + " score: " + game.player1.score;
+    document.querySelector('#score2').innerText = game.player2.name + "'s" + " score: " + game.player2.score;
+  }
+
+  console.log('turn:', game.turn);
+
 // Clear functions for any outstanding text.
   document.querySelector('#lose').innerText = "";
+  document.querySelector('#wincondition').innerText = "";
+  document.removeEventListener('keypress', gameStartEvent);
 
 // Global variables in the playGame scope.
-  var gameOver = "You lose!";
   var counter = 7000;
   var timerInput = document.querySelector('#timer');
   var keysArray = [113,119,101,97,115,100,122,120,99];
-  var validKey = keysArray[Math.round(Math.random() * keysArray.length)];
+  var validKey = keysArray[Math.floor(Math.random() * keysArray.length)];
   var timeStart = null;
   var timeTicking = null;
 
@@ -48,7 +58,7 @@ console.log('turn:', game.turn);
           console.log('awesome!');
 
           // Make new valid key
-          validKey = keysArray[Math.round(Math.random() * keysArray.length)]
+          validKey = keysArray[Math.floor(Math.random() * keysArray.length)]
           promptDisplay.innerText = String.fromCharCode(validKey);
           console.log('Press', String.fromCharCode(validKey) );
           if (counter >  1000){
@@ -66,21 +76,12 @@ console.log('turn:', game.turn);
             document.querySelector('#score2').innerText = game.player2.name + "'s" + " score: " + game.player2.score;
           }
 
-          //switch turn;
-          //game.turn++;
-
-          // game.turn.score++
-          // if(game.turn == game.player2){
-          //
-          // } else if(game.turn == game.player1){
-          //
-          // }
           window.clearInterval(timeTicking);
           window.clearTimeout(timeStart);
           countDown();
 
 // When you press the incorrect key.
-      } else if(evt.which !== 32) {
+      } else {
         console.log('Pressed key:', String.fromCharCode(evt.which));
         fail();
       }
@@ -88,11 +89,31 @@ console.log('turn:', game.turn);
 
 // Variable that runs when you press the wrong key.
   var fail = function() {
-    console.log('You lose!');
+console.log('You lose!');
+    var gameOver;
+    var winCondition;
+
+    if (game.turn%2===0){
+      //player1 failed
+      gameOver = "Player 1 loses! Press the space-bar for Player 2's turn!";
+      winCondition = "";
+    } else {
+      //player2 failed
+      gameOver = 'Player 2 loses! Time to round up the points...';
+      if (game.player1.score > game.player2.score){
+        winCondition = "Player 1 wins! Press the space bar to play again!";
+      } else if (game.player1.score < game.player2.score){
+        winCondition = "Player 2 wins! Press the space bar to play again!";
+      } else {
+        winCondition = "It's a draw! Press the space bar to play again!";
+      }
+    }
+
     document.querySelector('#lose').innerText = gameOver;
+    document.querySelector('#wincondition').innerText = winCondition;
     window.clearInterval(timeTicking);
     window.clearTimeout(timeStart);
-
+    document.addEventListener('keypress', gameStartEvent);
     document.removeEventListener('keypress', keyEvents); //remove existing event listener
     game.turn++; // switch turn;
   }

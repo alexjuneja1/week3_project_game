@@ -8,19 +8,19 @@ var game = {
   player2: {
     name: "Player 2",
     score: 0
-  }
+  },
+  turn: 0
 }
 
 // Function that runs when the game begins.
 function playGame() {
 
+console.log('turn:', game.turn);
 // Clear functions for any outstanding text.
-  document.removeEventListener("keypress", gameStartEvent);
   document.querySelector('#lose').innerText = "";
 
 // Global variables in the playGame scope.
-  var score = 0;
-  var gameOver = "You lose! Game Over!";
+  var gameOver = "You lose!";
   var counter = 7000;
   var timerInput = document.querySelector('#timer');
   var keysArray = [113,119,101,97,115,100,122,120,99];
@@ -33,6 +33,7 @@ function playGame() {
       console.log('Press', String.fromCharCode(validKey) );
       return String.fromCharCode(validKey);
   }
+
   var promptDisplay = document.querySelector('#prompt');
 
   promptDisplay.innerText = String.fromCharCode(validKey);
@@ -43,37 +44,57 @@ function playGame() {
 // When you press the correct key.
       if(evt.which === validKey){
           evt.preventDefault();
-          console.log(evt.which)
+          console.log('pressed key: ', String.fromCharCode(evt.which));
           console.log('awesome!');
+
+          // Make new valid key
           validKey = keysArray[Math.round(Math.random() * keysArray.length)]
           promptDisplay.innerText = String.fromCharCode(validKey);
           console.log('Press', String.fromCharCode(validKey) );
           if (counter >  1000){
             counter -= 1000;
           }
-          console.log(counter);
-          game.turn = game.player1;
-          game.turn.score++;
-          document.querySelector('#score1').innerText = game.turn.name + "'s" + " score: " + game.turn.score;
+          console.log('counter:', counter);
+
+          if (game.turn%2 === 0){
+            //player1's turn
+            game.player1.score++;
+            document.querySelector('#score1').innerText = game.player1.name + "'s" + " score: " + game.player1.score;
+          } else {
+            //player2's turn
+            game.player2.score++;
+            document.querySelector('#score2').innerText = game.player2.name + "'s" + " score: " + game.player2.score;
+          }
+
+          //switch turn;
+          //game.turn++;
+
+          // game.turn.score++
+          // if(game.turn == game.player2){
+          //
+          // } else if(game.turn == game.player1){
+          //
+          // }
           window.clearInterval(timeTicking);
           window.clearTimeout(timeStart);
           countDown();
 
 // When you press the incorrect key.
-      } else {
-        console.log(evt.which)
+      } else if(evt.which !== 32) {
+        console.log('Pressed key:', String.fromCharCode(evt.which));
         fail();
-        document.addEventListener('keypress', gameStartEvent);
       }
   }
 
 // Variable that runs when you press the wrong key.
   var fail = function() {
-    console.log('You lose! Game over!');
+    console.log('You lose!');
     document.querySelector('#lose').innerText = gameOver;
     window.clearInterval(timeTicking);
     window.clearTimeout(timeStart);
-    document.removeEventListener('keypress', keyEvents);
+
+    document.removeEventListener('keypress', keyEvents); //remove existing event listener
+    game.turn++; // switch turn;
   }
 
 // The timer that runs whilst you have the prompt.
@@ -101,10 +122,6 @@ var gameStartEvent = function(evt){
     if(evt.which === 32){
         playGame();
     }
-}
-
-var gameReset = function(evt){
-
 }
 
 // The Event Listener to start the game.

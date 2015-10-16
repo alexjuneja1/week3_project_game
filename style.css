@@ -1,3 +1,67 @@
+body {
+  background-image: url(school.png)
+}
+
+#container {
+  padding: 20px;
+  margin: 20px auto;
+  width: 1000px;
+  height: 500px;
+}
+
 #prompt {
-  font-size: 100px;
+  font-size: 60px;
+  text-align: center;
+  font-family: "Arial Black", Gadget, sans-serif;
+  background-color: #ccc;
+  margin: 20px;
+}
+
+#timer {
+  font-size: 50px;
+  text-align: center;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+#instructions {
+  font-size: 15px;
+  text-align: center;
+  font-family:"Comic Sans MS", cursive, sans-serif;
+}
+
+#keysused {
+  font-size: 20px;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+.keys {
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 45px;
+  display: inline;
+  margin: 45px;
+}
+
+#score1 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 25px;
+}
+
+#score2 {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 25px;
+}
+
+#lose {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 25px;
+}
+
+#wincondition {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  font-size: 25px;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Lucida Console", Monaco, monospace;
 }
